@@ -4,9 +4,12 @@
 #include<iostream>
 #include<fstream>
 #include<sstream>
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_ONLY_PNG
+#include "stb_image.h"
 
 std::string ResourceManager::getFileString(const std::string& relativeFilePath) const {
-	std::ifstream file(executablePath + "/" + relativeFilePath, std::ios::binary);
+	std::ifstream file(executablePath + '/' + relativeFilePath, std::ios::binary);
 	if (!file.is_open()) {
 		std::cerr << "Failed to open file: " << relativeFilePath << std::endl;
 		return std::string{};
@@ -58,4 +61,22 @@ std::shared_ptr<Renderer::ShaderProgram> ResourceManager::getShaderProgram(
 		return nullptr;
 	}
 	return it->second;
+}
+void ResourceManager::loadTexture(const std::string& textureName, const std::string& texturePath) {
+	
+	int channels = NULL;
+	int width = NULL;
+	int height = NULL;
+
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* pixels = stbi_load(
+		std::string(executablePath + '/' + texturePath).c_str(), &width, &height,
+		&channels, NULL);
+
+	if (pixels == NULL) {
+		std::cerr << "Can't load image: " << texturePath << std::endl;
+		return;
+	}
+
+	stbi_image_free(pixels);
 }
