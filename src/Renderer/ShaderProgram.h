@@ -29,5 +29,6 @@ namespace Renderer {
 			return programIsCompiled;
 		}
 		void use() const;
+		void setInt(const std::string& name, const GLint value);
 	};
 }

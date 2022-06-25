@@ -90,7 +90,7 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::loadTexture(
 std::shared_ptr<Renderer::Texture2D> ResourceManager::getTexture(const std::string& textureName) {
 	TexturesMap::const_iterator it = textures.find(textureName);
 	if (it == textures.end()) {
-		std::cerr << "Cant't find the shader program: " << textureName << std::endl;
+		std::cerr << "Cant't find the texture: " << textureName << std::endl;
 		return nullptr;
 	}
 	return it->second;
