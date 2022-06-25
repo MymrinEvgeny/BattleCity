@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include<glm/vec2.hpp>
 
 #include <iostream>
 
@@ -25,13 +26,12 @@ GLfloat texCoord[] = {
     0.0f, 0.0f
 };
 
-int windowWidth = 640;
-int windowHeight = 480;
+glm::ivec2 windowSize(640, 480);
 
 void glfwWindowSizeCallback(GLFWwindow* pWindow, int width, int height) {
-    windowWidth = width;
-    windowHeight = height;
-    glViewport(0, 0, windowWidth, windowHeight);
+    windowSize.x = width;
+    windowSize.y = height;
+    glViewport(0, 0, width, height);
 }
 
 void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mode) {
@@ -53,7 +53,8 @@ int main(int argc, char* argv[]) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    GLFWwindow* pWindow = glfwCreateWindow(windowWidth, windowHeight, "BattleCity", nullptr, nullptr);
+    GLFWwindow* pWindow = glfwCreateWindow(windowSize.x, windowSize.y,
+        "BattleCity", nullptr, nullptr);
     if (!pWindow) {
         std::cout << "glfwCreateWindow failed!" << std::endl;
         glfwTerminate();
@@ -79,14 +80,16 @@ int main(int argc, char* argv[]) {
     {
         ResourceManager resourceManager(argv[0]);
         auto pDefaultShaderProgram = resourceManager.loadShaders(
-            "DefaultShaderProgram", "res/shaders/vertex.glsl", "res/shaders/fragment.glsl");
+            "DefaultShaderProgram", "res/shaders/vertex.glsl",
+            "res/shaders/fragment.glsl");
         if (pDefaultShaderProgram == nullptr) {
             std::cerr << "Can't create shader program: "
                 << "DefaultShaderProgram" << std::endl;
             return -1;
         }
 
-        auto tex = resourceManager.loadTexture("DefaultTexture", "res/textures/map_16x16.png");
+        auto tex = resourceManager.loadTexture("DefaultTexture",
+            "res/textures/map_16x16.png");
         if (tex == nullptr) {
             std::cerr << "Can't create texture: "
                 << "DefaultTexture" << std::endl;
