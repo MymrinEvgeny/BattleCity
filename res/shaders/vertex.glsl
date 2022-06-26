@@ -7,8 +7,11 @@ layout(location = 2) in vec2 textureCoord;
 out vec3 color;
 out vec2 texCoord;
 
+uniform mat4 modelMatrix;
+uniform mat4 projectionMatrix;
+
 void main() {
    color = vertexColor;
    texCoord = textureCoord;
-   gl_Position = vec4(vertexPosition, 1.0);
+   gl_Position = projectionMatrix * modelMatrix * vec4(vertexPosition, 1.0);
 }

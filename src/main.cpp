@@ -1,6 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include<glm/vec2.hpp>
+#include<glm/mat4x4.hpp>
+#include<glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
@@ -9,9 +11,9 @@
 #include"Renderer/Texture2D.h"
 
 GLfloat points[] = {
-    0.0f, 0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    -0.5f, -0.5f, 0.0f
+    0.0f, 50.0f, 0.0f,
+    50.0f, -50.0f, 0.0f,
+    -50.0f, -50.0f, 0.0f
 };
 
 GLfloat colors[] = {
@@ -75,7 +77,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
-    glClearColor(0, 0, 0.1f, 1);
+    glClearColor(0, 0, 0.3f, 1);
 
     {
         ResourceManager resourceManager(argv[0]);
@@ -130,6 +132,19 @@ int main(int argc, char* argv[]) {
         pDefaultShaderProgram->use();
         pDefaultShaderProgram->setInt("tex", 0);
 
+        glm::mat4 modelMatrix1(1.0f);
+        modelMatrix1 = glm::translate(modelMatrix1, glm::vec3(100.0f, 100.0f, 0.0f));
+
+        glm::mat4 modelMatrix2(1.0f);
+        modelMatrix2 = glm::translate(modelMatrix2, glm::vec3(540.0f, 100.0f, 0.0f));
+
+        glm::mat4 projectionMatrix = glm::ortho(
+            0.0f, static_cast<float>(windowSize.x),
+            0.0f, static_cast<float>(windowSize.y),
+            0.0f, 1.0f);
+
+        pDefaultShaderProgram->setMatrix4("projectionMatrix", projectionMatrix);
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(pWindow)) {
             /* Render here */
@@ -138,6 +153,11 @@ int main(int argc, char* argv[]) {
             pDefaultShaderProgram->use();
             glBindVertexArray(VAO);
             tex->bind();
+
+            pDefaultShaderProgram->setMatrix4("modelMatrix", modelMatrix1);
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+
+            pDefaultShaderProgram->setMatrix4("modelMatrix", modelMatrix2);
             glDrawArrays(GL_TRIANGLES, 0, 3);
 
             /* Swap front and back buffers */
