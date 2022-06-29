@@ -27,9 +27,7 @@ namespace Renderer {
 		ShaderProgram& operator=(const ShaderProgram&) = delete;
 		ShaderProgram& operator=(ShaderProgram&&) noexcept;
 
-		bool isCompiled() const {
-			return programIsCompiled;
-		}
+		bool isCompiled() const;
 		void use() const;
 		void setInt(const std::string& name, const GLint value);
 		void setMatrix4(const std::string& name, const glm::mat4& matrix);

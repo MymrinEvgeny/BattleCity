@@ -84,6 +84,9 @@ namespace Renderer {
         return *this;
     }
 
+    bool ShaderProgram::isCompiled() const {
+        return programIsCompiled;
+    }
     void ShaderProgram::use() const {
         glUseProgram(programID);
     }
