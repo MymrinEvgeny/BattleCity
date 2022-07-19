@@ -101,8 +101,8 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::getTexture(
 }
 std::shared_ptr<Renderer::Sprite> ResourceManager::loadSprite(
 	const std::string& spriteName, const std::string& textureName,
-	const std::string& shaderProgramName, const unsigned int spriteWidth,
-	const unsigned int spriteHeight) {
+	const std::string& subTextureName, const std::string& shaderProgramName,
+	const unsigned int spriteWidth, const unsigned int spriteHeight) {
 
 	auto pTexture = getTexture(textureName);
 	if (pTexture == nullptr) {
@@ -118,8 +118,8 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::loadSprite(
 	}
 
 	std::shared_ptr<Renderer::Sprite> newSprite = sprites.emplace(spriteName,
-		std::make_shared<Renderer::Sprite>(pTexture, pShaderProgram, glm::vec2(0.0f),
-			glm::vec2(spriteWidth, spriteHeight))).first->second;
+		std::make_shared<Renderer::Sprite>(pTexture, subTextureName, pShaderProgram,
+			glm::vec2(0.0f), glm::vec2(spriteWidth, spriteHeight))).first->second;
 
 	return	newSprite;
 }
@@ -132,4 +132,36 @@ std::shared_ptr<Renderer::Sprite> ResourceManager::getSprite(
 		return nullptr;
 	}
 	return it->second;
+}
+std::shared_ptr<Renderer::Texture2D> ResourceManager::loadTextureAtlas(
+	const std::string& textureName, const std::string& texturePath,
+	const std::vector<std::string>& subTextureNames, const unsigned int& subTextureWidth,
+	const unsigned int& subTextureHeight) {
+
+	auto pTexture = loadTexture(textureName, texturePath);
+	if (pTexture == nullptr) {
+		return nullptr;
+	}
+	
+	const unsigned int textureWidth = pTexture->getWidth();
+	const unsigned int textureHeight = pTexture->getHeight();
+
+	unsigned int currentTextureOffsetX = 0;
+	unsigned int currentTextureOffsetY = textureHeight;
+
+	for (const auto& currentSubTextureName : subTextureNames) {
+		glm::vec2 leftBottom(
+			static_cast<float>(currentTextureOffsetX) / textureWidth,
+			static_cast<float>(currentTextureOffsetY - subTextureHeight) / textureHeight);
+		glm::vec2 rightTop(
+			static_cast<float>(currentTextureOffsetX + subTextureWidth) / textureWidth,
+			static_cast<float>(currentTextureOffsetY) / textureHeight);
+		pTexture->addSubTexture(currentSubTextureName, leftBottom, rightTop);
+
+		currentTextureOffsetX += subTextureWidth;
+		if (currentTextureOffsetX >= textureWidth) {
+			currentTextureOffsetX = 0;
+			currentTextureOffsetY -= subTextureHeight;
+		}
+	}
 }

@@ -3,12 +3,15 @@
 #include<glm/mat4x4.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 
+#include<string>
+
 #include"ShaderProgram.h"
 #include"Texture2D.h"
 
 namespace Renderer {
 
 	Sprite::Sprite(const std::shared_ptr<Texture2D> pTexture,
+		const std::string subTextureName,
 		const std::shared_ptr<ShaderProgram> pShaderProgram,
 		const glm::vec2& position,
 		const glm::vec2& size,
@@ -26,15 +29,17 @@ namespace Renderer {
 			1.0f, 1.0f
 		};
 
+		auto subTexture = pTexture->getSubTexture(subTextureName);
+
 		const GLfloat texCoords[] = {
 
-			0.0f, 0.0f,
-			0.0f, 1.0f,
-			1.0f, 1.0f,
+			subTexture.leftBottom.x, subTexture.leftBottom.y,
+			subTexture.leftBottom.x, subTexture.rightTop.y,
+			subTexture.rightTop.x, subTexture.rightTop.y,
 
-			0.0f, 0.0f,
-			1.0f, 0.0f,
-			1.0f, 1.0f
+			subTexture.leftBottom.x, subTexture.leftBottom.y,
+			subTexture.rightTop.x, subTexture.leftBottom.y,
+			subTexture.rightTop.x, subTexture.rightTop.y
 		};
 
 		glGenVertexArrays(1, &VAO);

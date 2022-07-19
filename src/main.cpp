@@ -108,8 +108,19 @@ int main(int argc, char* argv[]) {
             return -1;
         }
 
-        auto pSprite = resourceManager.loadSprite("NewSprite", "DefaultTexture",
-            "SpriteShaderProgram", 50, 100);
+        std::vector<std::string> subTextureNames = { "block", "topBlock", "bottomBlock",
+        "rightBlock", "leftBlock", "topLeftBlock", "topRightBlock", "bottomLeftBlock",
+        "bottomRightBlock", "metalBlock"};
+        auto pTextureAtlas = resourceManager.loadTextureAtlas("DefaultTextureAtlas",
+            "res/textures/map_16x16.png", subTextureNames, 16, 16);
+        if (pTextureAtlas == nullptr) {
+            std::cerr << "Can't create textureAtlas: "
+                << "DefaultTextureAtlas" << std::endl;
+            return -1;
+        }
+
+        auto pSprite = resourceManager.loadSprite("NewSprite", "DefaultTextureAtlas",
+            "metalBlock", "SpriteShaderProgram", 100, 100);
         if (pSprite == nullptr) {
             std::cerr << "Can't create sprite: "
                 << "NewSprite" << std::endl;

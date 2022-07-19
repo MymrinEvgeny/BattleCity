@@ -59,7 +59,27 @@ namespace Renderer {
 		return *this;
 	}
 
+	unsigned int Texture2D::getWidth() const {
+		return width;
+	}
+	unsigned int Texture2D::getHeight() const {
+		return height;
+	}
 	void Texture2D::bind() const {
 		glBindTexture(GL_TEXTURE_2D, ID);
+	}
+	void Texture2D::addSubTexture(const std::string& name, const glm::vec2& leftBottom,
+		const glm::vec2& rightTop) {
+
+		subTextures.emplace(name, SubTexture2D(leftBottom, rightTop));
+	}
+	Texture2D::SubTexture2D Texture2D::getSubTexture(const std::string& name) const {
+
+		auto it = subTextures.find(name);
+		if (it == subTextures.end()) {
+			std::cerr << "Cant't find the subTexture: " << name << ", default texture will be returned" << std::endl;
+			return SubTexture2D();
+		}
+		return it->second;
 	}
 }
