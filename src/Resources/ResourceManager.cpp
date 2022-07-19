@@ -1,11 +1,12 @@
-#include"ResourceManager.h"
-#include"../Renderer/ShaderProgram.h"
-#include"../Renderer/Texture2D.h"
-#include"../Renderer/Sprite.h"
+#include "ResourceManager.h"
+#include "../Renderer/ShaderProgram.h"
+#include "../Renderer/Texture2D.h"
+#include "../Renderer/Sprite.h"
+#include "../Renderer/AnimatedSprite.h"
 
-#include<iostream>
-#include<fstream>
-#include<sstream>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_ONLY_PNG
 #include "stb_image.h"
@@ -164,4 +165,41 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::loadTextureAtlas(
 			currentTextureOffsetY -= subTextureHeight;
 		}
 	}
+}
+std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::loadAnimatedSprite(
+	const std::string& animatedSpriteName, const std::string& textureName,
+	const std::string& subTextureName, const std::string& shaderProgramName,
+	const unsigned int spriteWidth, const unsigned int spriteHeight) {
+
+	auto pTexture = getTexture(textureName);
+	if (pTexture == nullptr) {
+		std::cerr << "Cant't find the texture: " << textureName << std::endl;
+		return nullptr;
+	}
+
+	auto pShaderProgram = getShaderProgram(shaderProgramName);
+	if (pShaderProgram == nullptr) {
+		std::cerr << "Cant't find the shader program: "
+			<< shaderProgramName << std::endl;
+		return nullptr;
+	}
+
+	std::shared_ptr<Renderer::AnimatedSprite> newAnimatedSprite =
+		animatedSprites.emplace(animatedSpriteName,
+			std::make_shared<Renderer::AnimatedSprite>(pTexture, subTextureName,
+				pShaderProgram, glm::vec2(0.0f), glm::vec2(spriteWidth, spriteHeight))
+		).first->second;
+
+	return newAnimatedSprite;
+}
+std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::getAnimatedSprite(
+	const std::string& animatedSpriteName) {
+
+	AnimatedSpritesMap::const_iterator it = animatedSprites.find(animatedSpriteName);
+	if (it == animatedSprites.end()) {
+		std::cerr << "Cant't find the animatedSprite: " 
+			<< animatedSpriteName << std::endl;
+		return nullptr;
+	}
+	return it->second;
 }

@@ -12,7 +12,7 @@ namespace Renderer {
 	class ShaderProgram;
 
 	class Sprite {
-	private:
+	protected:
 
 		std::shared_ptr<Texture2D> pTexture;
 		std::shared_ptr<ShaderProgram> pShaderProgram;
@@ -37,7 +37,7 @@ namespace Renderer {
 
 		Sprite& operator=(const Sprite&) = delete;
 
-		void render() const;
+		virtual void render() const;
 		void setPosition(const glm::vec2& position);
 		void setSize(const glm::vec2& size);
 		void setRotation(const float rotation);
