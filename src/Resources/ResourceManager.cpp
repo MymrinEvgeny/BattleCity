@@ -11,7 +11,13 @@
 #define STBI_ONLY_PNG
 #include "stb_image.h"
 
-std::string ResourceManager::getFileString(const std::string& relativeFilePath) const {
+std::string ResourceManager::executablePath;
+ResourceManager::ShaderProgramsMap ResourceManager::shaderPrograms;
+ResourceManager::TexturesMap ResourceManager::textures;
+ResourceManager::SpritesMap ResourceManager::sprites;
+ResourceManager::AnimatedSpritesMap ResourceManager::animatedSprites;
+
+std::string ResourceManager::getFileString(const std::string& relativeFilePath) {
 	std::ifstream file(executablePath + '/' + relativeFilePath, std::ios::binary);
 	if (!file.is_open()) {
 		std::cerr << "Failed to open file: " << relativeFilePath << std::endl;
@@ -23,11 +29,16 @@ std::string ResourceManager::getFileString(const std::string& relativeFilePath) 
 	return buffer.str();
 }
 
-ResourceManager::ResourceManager(const std::string& executablePath) {
+void ResourceManager::setExecutablePath(const std::string& executablePath) {
 	size_t found = executablePath.find_last_of("/\\");
-	this->executablePath = executablePath.substr(0, found);
+	ResourceManager::executablePath = executablePath.substr(0, found);
 }
-
+void ResourceManager::unloadAllResources() {
+	shaderPrograms.clear();
+	textures.clear();
+	sprites.clear();
+	animatedSprites.clear();
+}
 std::shared_ptr<Renderer::ShaderProgram> ResourceManager::loadShaders(
 	const std::string& shaderProgramName, const std::string& vertexShaderPath,
 	const std::string& fragmentShaderPath) {
@@ -165,6 +176,8 @@ std::shared_ptr<Renderer::Texture2D> ResourceManager::loadTextureAtlas(
 			currentTextureOffsetY -= subTextureHeight;
 		}
 	}
+
+	return pTexture;
 }
 std::shared_ptr<Renderer::AnimatedSprite> ResourceManager::loadAnimatedSprite(
 	const std::string& animatedSpriteName, const std::string& textureName,
