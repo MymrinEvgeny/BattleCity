@@ -68,8 +68,7 @@ namespace Renderer {
 				subTexture.rightTop.x, subTexture.leftBottom.y
 			};
 
-			glBindBuffer(GL_ARRAY_BUFFER, textureCoordsVBO);
-			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(texCoords), texCoords);
+			textureCoordsBuffer.update(texCoords, sizeof(texCoords));
 			glBindBuffer(GL_ARRAY_BUFFER, NULL);
 			dirty = false;
 		}

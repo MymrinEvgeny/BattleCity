@@ -11,7 +11,7 @@
 namespace Renderer {
 
 	Sprite::Sprite(const std::shared_ptr<Texture2D> pTexture,
-		const std::string subTextureName,
+		const std::string& subTextureName,
 		const std::shared_ptr<ShaderProgram> pShaderProgram,
 		const glm::vec2& position,
 		const glm::vec2& size,
@@ -43,32 +43,21 @@ namespace Renderer {
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
 
-		glGenBuffers(1, &vertexCoordsVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexCoordsVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexCoords), vertexCoords,
-			GL_STATIC_DRAW);
+		vertexCoordsBuffer.init(vertexCoords, sizeof(vertexCoords));
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-		glGenBuffers(1, &textureCoordsVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, textureCoordsVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords,
-			GL_STATIC_DRAW);
+		textureCoordsBuffer.init(texCoords, sizeof(texCoords));
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-		glGenBuffers(1, &EBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		indexBuffer.init(indices, sizeof(indices));
 
 		glBindBuffer(GL_ARRAY_BUFFER, NULL);
 		glBindVertexArray(NULL);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
 	}
 	Sprite::~Sprite() {
-		glDeleteBuffers(1, &EBO);
-		glDeleteBuffers(1, &textureCoordsVBO);
-		glDeleteBuffers(1, &vertexCoordsVBO);
 		glDeleteVertexArrays(1, &VAO);
 	}
 
@@ -97,7 +86,7 @@ namespace Renderer {
 	void Sprite::setSize(const glm::vec2& size) {
 		this->size = size;
 	}
-	void Sprite::setRotation(const float rotation) {
+	void Sprite::setRotation(const float& rotation) {
 		this->rotation = rotation;
 	}
 }

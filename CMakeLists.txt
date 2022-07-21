@@ -5,17 +5,24 @@ project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} 
 	src/main.cpp
+
 	src/Renderer/AnimatedSprite.cpp
 	src/Renderer/AnimatedSprite.h
+	src/Renderer/IndexBuffer.cpp
+	src/Renderer/IndexBuffer.h
 	src/Renderer/ShaderProgram.cpp
 	src/Renderer/ShaderProgram.h
 	src/Renderer/Sprite.cpp
 	src/Renderer/Sprite.h
 	src/Renderer/Texture2D.cpp
 	src/Renderer/Texture2D.h
+	src/Renderer/VertexBuffer.cpp
+	src/Renderer/VertexBuffer.h
+
 	src/Resources/ResourceManager.cpp
 	src/Resources/ResourceManager.h
 	src/Resources/stb_image.h
+
 	src/Game/Game.h
 	src/Game/Game.cpp
 	src/Game/Tank.h
