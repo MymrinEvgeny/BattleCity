@@ -62,14 +62,10 @@ namespace Renderer {
 				itCurrentAnimationDurations->second[currentFrame].first);
 
 			const GLfloat texCoords[] = {
-
 				subTexture.leftBottom.x, subTexture.leftBottom.y,
 				subTexture.leftBottom.x, subTexture.rightTop.y,
 				subTexture.rightTop.x, subTexture.rightTop.y,
-
-				subTexture.leftBottom.x, subTexture.leftBottom.y,
-				subTexture.rightTop.x, subTexture.leftBottom.y,
-				subTexture.rightTop.x, subTexture.rightTop.y
+				subTexture.rightTop.x, subTexture.leftBottom.y
 			};
 
 			glBindBuffer(GL_ARRAY_BUFFER, textureCoordsVBO);

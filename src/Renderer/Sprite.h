@@ -23,6 +23,7 @@ namespace Renderer {
 		GLuint VAO;
 		GLuint vertexCoordsVBO;
 		GLuint textureCoordsVBO;
+		GLuint EBO;
 
 	public:
 		Sprite() = delete;
