@@ -2,7 +2,10 @@
 
 #include <glm/vec2.hpp>
 
-#include<array>
+#include <array>
+#include <memory>
+
+class Tank;
 
 class Game {
 public:
@@ -24,4 +27,5 @@ private:
 	glm::ivec2 windowSize;
 	GameState currentGameState;
 	std::array<bool, KEYS_COUNT> keys;
+	std::unique_ptr<Tank> pTank;
 };
