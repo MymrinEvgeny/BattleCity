@@ -10,6 +10,8 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/AnimatedSprite.h
 	src/Renderer/IndexBuffer.cpp
 	src/Renderer/IndexBuffer.h
+	src/Renderer/Renderer.cpp
+	src/Renderer/Renderer.h
 	src/Renderer/ShaderProgram.cpp
 	src/Renderer/ShaderProgram.h
 	src/Renderer/Sprite.cpp

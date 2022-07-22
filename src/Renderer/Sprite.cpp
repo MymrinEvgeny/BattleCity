@@ -1,12 +1,12 @@
-#include"Sprite.h"
+#include "Sprite.h"
+#include "ShaderProgram.h"
+#include "Texture2D.h"
+#include "Renderer.h"
 
-#include<glm/mat4x4.hpp>
-#include<glm/gtc/matrix_transform.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-#include<string>
-
-#include"ShaderProgram.h"
-#include"Texture2D.h"
+#include <string>
 
 namespace RenderEngine {
 
@@ -73,9 +73,8 @@ namespace RenderEngine {
 
 		pShaderProgram->setMatrix4("modelMatrix", model);
 		pTexture->bind();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-		vertexArray.unbind();
+		Renderer::draw(vertexArray, indexBuffer, *pShaderProgram);
 	}
 	void Sprite::setPosition(const glm::vec2& position) {
 		this->position = position;

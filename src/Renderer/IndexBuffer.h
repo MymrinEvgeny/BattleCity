@@ -17,7 +17,9 @@ namespace RenderEngine {
 		void init(const void* data, const unsigned int& size);
 		void bind() const;
 		void unbind() const;
+		GLsizei getCount() const;
 	private:
 		GLuint id;
+		GLsizei count;
 	};
 }
