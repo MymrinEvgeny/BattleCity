@@ -3,6 +3,7 @@
 #include<glad/glad.h>
 #include<glm/vec2.hpp>
 
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
@@ -39,7 +40,7 @@ namespace Renderer {
 		glm::vec2 size;
 		float rotation;
 
-		GLuint VAO;
+		VertexArray vertexArray;
 		VertexBuffer vertexCoordsBuffer;
 		VertexBuffer textureCoordsBuffer;
 		IndexBuffer indexBuffer;

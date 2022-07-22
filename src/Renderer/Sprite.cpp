@@ -40,26 +40,23 @@ namespace Renderer {
 			0, 3, 2
 		};
 
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-
 		vertexCoordsBuffer.init(vertexCoords, sizeof(vertexCoords));
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		VertexBufferLayout vertexCoordsBufferLayout;
+		vertexCoordsBufferLayout.addElementLayoutFloat(2, GL_FALSE);
+		vertexArray.addVertexBuffer(vertexCoordsBuffer, vertexCoordsBufferLayout);
 
 		textureCoordsBuffer.init(texCoords, sizeof(texCoords));
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		VertexBufferLayout textureCoordsBufferLayout;
+		textureCoordsBufferLayout.addElementLayoutFloat(2, GL_FALSE);
+		vertexArray.addVertexBuffer(textureCoordsBuffer, textureCoordsBufferLayout);
 
 		indexBuffer.init(indices, sizeof(indices));
 
-		glBindBuffer(GL_ARRAY_BUFFER, NULL);
-		glBindVertexArray(NULL);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
+		vertexCoordsBuffer.unbind(); // textureCoordsBuffer.unbind();
+		vertexArray.unbind();
+		indexBuffer.unbind();
 	}
-	Sprite::~Sprite() {
-		glDeleteVertexArrays(1, &VAO);
-	}
+	Sprite::~Sprite() {}
 
 	void Sprite::render() const {
 		pShaderProgram->use();
@@ -72,13 +69,13 @@ namespace Renderer {
 		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
 		model = glm::scale(model, glm::vec3(size, 1.0f));
 
-		glBindVertexArray(VAO);
+		vertexArray.bind();
 
 		pShaderProgram->setMatrix4("modelMatrix", model);
 		pTexture->bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-		glBindVertexArray(NULL);
+		vertexArray.unbind();
 	}
 	void Sprite::setPosition(const glm::vec2& position) {
 		this->position = position;
