@@ -4,7 +4,7 @@
 
 #include <glad/glad.h>
 
-namespace Renderer {
+namespace RenderEngine {
 
 	class VertexArray {
 	public:

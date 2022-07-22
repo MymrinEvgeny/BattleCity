@@ -3,7 +3,7 @@
 #include<iostream>
 #include<glm/gtc/type_ptr.hpp>
 
-namespace Renderer {
+namespace RenderEngine {
 
     bool ShaderProgram::createShader(const std::string& source,
         const GLenum shaderType,

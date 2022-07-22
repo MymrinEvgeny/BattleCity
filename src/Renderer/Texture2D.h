@@ -7,7 +7,7 @@
 #include<string>
 #include<map>
 
-namespace Renderer {
+namespace RenderEngine {
 	class Texture2D {
 	public:
 

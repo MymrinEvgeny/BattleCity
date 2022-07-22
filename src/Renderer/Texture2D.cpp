@@ -1,6 +1,6 @@
 #include"Texture2D.h"
 
-namespace Renderer {
+namespace RenderEngine {
 	Texture2D::Texture2D(Texture2D&& texture2D) noexcept {
 		ID = texture2D.ID;
 		mode = texture2D.mode;

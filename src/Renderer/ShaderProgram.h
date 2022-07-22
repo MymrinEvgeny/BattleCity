@@ -5,7 +5,7 @@
 
 #include<string>
 
-namespace Renderer {
+namespace RenderEngine {
 	class ShaderProgram {
 	private:
 

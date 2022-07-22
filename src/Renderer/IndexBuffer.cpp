@@ -2,7 +2,7 @@
 
 #include <vcruntime.h>
 
-namespace Renderer {
+namespace RenderEngine {
 
 	IndexBuffer::IndexBuffer() : id(NULL) {}
 	IndexBuffer::IndexBuffer(IndexBuffer&& indexBuffer) noexcept {

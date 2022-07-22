@@ -2,7 +2,7 @@
 
 #include <vcruntime.h>
 
-namespace Renderer {
+namespace RenderEngine {
 
 	VertexBuffer::VertexBuffer() : id(NULL) {}
 	VertexBuffer::VertexBuffer(VertexBuffer&& vertexBuffer) noexcept {

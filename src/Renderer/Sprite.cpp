@@ -8,7 +8,7 @@
 #include"ShaderProgram.h"
 #include"Texture2D.h"
 
-namespace Renderer {
+namespace RenderEngine {
 
 	Sprite::Sprite(const std::shared_ptr<Texture2D> pTexture,
 		const std::string& subTextureName,

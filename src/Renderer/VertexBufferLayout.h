@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace Renderer {
+namespace RenderEngine {
 
 	struct VertexBufferLayoutElement {
 		GLint size;

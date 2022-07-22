@@ -2,7 +2,7 @@
 
 #include <vcruntime.h>
 
-namespace Renderer {
+namespace RenderEngine {
 
 	VertexArray::VertexArray() {
 		glGenVertexArrays(1, &id);
@@ -28,7 +28,7 @@ namespace Renderer {
 		vertexBuffer.bind();
 		const auto& vertexBufferLayoutElements =
 			vertexBufferLayout.getVertexBufferLayoutElements();
-		Renderer::VertexBufferLayoutElement el;
+		RenderEngine::VertexBufferLayoutElement el;
 		GLuint currentAttribIndex;
 		GLint offset = 0;
 		for (size_t i = 0; i < vertexBufferLayoutElements.size(); i++) {
