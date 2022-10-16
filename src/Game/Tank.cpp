@@ -26,22 +26,22 @@ void Tank::setOrientation(Orientation orientation) {
 	switch (orientation)
 	{
 	case Tank::Orientation::Top:
-		pAnimatedSprite->setState("tankTopState");
+		pAnimatedSprite->setState("yellowTank1Top");
 		moveOffset.x = 0.0f;
 		moveOffset.y = 1.0f;
 		break;
 	case Tank::Orientation::Bottom:
-		pAnimatedSprite->setState("tankBottomState");
+		pAnimatedSprite->setState("yellowTank1Bottom");
 		moveOffset.x = 0.0f;
 		moveOffset.y = -1.0f;
 		break;
 	case Tank::Orientation::Left:
-		pAnimatedSprite->setState("tankLeftState");
+		pAnimatedSprite->setState("yellowTank1Left");
 		moveOffset.x = -1.0f;
 		moveOffset.y = 0.0f;
 		break;
 	case Tank::Orientation::Right:
-		pAnimatedSprite->setState("tankRightState");
+		pAnimatedSprite->setState("yellowTank1Right");
 		moveOffset.x = 1.0f;
 		moveOffset.y = 0.0f;
 		break;

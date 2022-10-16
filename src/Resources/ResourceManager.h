@@ -66,4 +66,5 @@ public:
 		const unsigned int spriteWidth, const unsigned int spriteHeight);
 	static std::shared_ptr<RenderEngine::AnimatedSprite> getAnimatedSprite(
 		const std::string& animatedSpriteName);
+	static bool loadJSONResources(const std::string& JSONPath);
 };
